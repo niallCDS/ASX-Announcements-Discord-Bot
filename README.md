@@ -1,10 +1,16 @@
 # ASX Announcements Discord Bot
 
+> :exclamation: If you use this project in anyway, make sure to let me know on Twitter [@NiallGillmor](https://twitter.com/NiallGillmor). Always keen to get involved in anything related to the intersection of programming and the financial markets.
+
 ## To-Do
 
+- [ ] Add config file.
+- [ ] Parse date.
+- [ ] Spice up embed.
+- [ ] Seperate announcements for different stocks into different channels.
+- [ ] Get company logo for embed.
 - [x] Add database and store unqiue.
 - [x] Create new table if that company does not already exist.
-- [ ] Add config file.
 - [x] Discord bot.
 
 ## Personal Project Learnings
