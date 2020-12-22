@@ -9,6 +9,7 @@
 - [ ] Spice up embed.
 - [ ] Seperate announcements for different stocks into different channels.
 - [ ] Get company logo for embed.
+- [ ] Add details of installation and setup to README
 - [x] Add database and store unqiue.
 - [x] Create new table if that company does not already exist.
 - [x] Discord bot.
