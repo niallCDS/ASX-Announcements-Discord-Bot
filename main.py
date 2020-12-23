@@ -2,19 +2,32 @@ import requests
 import json
 import sqlite3
 from discord import Webhook, RequestsWebhookAdapter, Embed, Colour
+from configparser import ConfigParser
+
+
+config = ConfigParser()
+config.read('config.ini')
+
+company_tickers = json.loads(config['Companies']['companies'])
 
 conn = sqlite3.connect('announcements.db')
 c = conn.cursor()
 
-company_tickers = ['EML']
+
+def get_xid(company_ticker: str) -> str:
+    """Returns the XID of a company according to its ticker."""
+    r = requests.get(
+        f"https://asx.api.markitdigital.com/asx-research/1.0/search/predictive?searchText={company_ticker}").json()
+    return r['data']['items'][0]['xidEntity']
+
 
 for company in company_tickers:
     c.execute(
         f"CREATE TABLE IF NOT EXISTS {company} (document_key text, date text)")
-
-    r = requests.get(
-        'https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]=204124784&page=0&itemsPerPage=50').json()
-    for announcement in r['data']['items']:
+    print(get_xid(company))
+    announcements = requests.get(
+        f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=5").json()
+    for announcement in announcements['data']['items']:
         document_key = announcement["documentKey"]
         date = announcement["date"]
         c.execute(
@@ -24,7 +37,7 @@ for company in company_tickers:
             c.execute(
                 f"INSERT INTO {company} VALUES (?, ?)", (document_key, date))
             webhook = Webhook.partial(
-                790900535250649088, 'w4_92oUaUEdWINNjZEC6-BXUOubFa7xjaGEy_z9UbNk1-oH1scDJ5EBK912qrb-dAIW-', adapter=RequestsWebhookAdapter())
+                int(config['Discord Settings']['id']), config['Discord Settings']['token'], adapter=RequestsWebhookAdapter())
             if announcement['isPriceSensitive'] is True:
                 embed_colour = Colour.red()
             else:
