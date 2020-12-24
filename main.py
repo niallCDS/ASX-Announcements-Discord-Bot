@@ -3,6 +3,7 @@ import json
 import sqlite3
 from discord import Webhook, RequestsWebhookAdapter, Embed, Colour
 from configparser import ConfigParser
+from datetime import datetime
 
 
 config = ConfigParser()
@@ -42,12 +43,14 @@ for company in company_tickers:
                 embed_colour = Colour.red()
             else:
                 embed_colour = Colour.orange()
+            announcement_date = datetime.strptime(
+                announcement['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
             embed = Embed(
-                title=f"{announcement['companyInfo'][0]['symbol']} - {announcement['headline']}", colour=embed_colour)
+                title=f"{announcement['companyInfo'][0]['symbol']} - {announcement['headline']}", colour=embed_colour, timestamp=announcement_date)
             embed.add_field(name='Announcement Type',
                             value=announcement['announcementTypes'][0], inline=True)
-            embed.add_field(name='Announcement Date',
-                            value=announcement['date'], inline=True)
+            embed.add_field(name='Announcement Time',
+                            value=announcement_date.strftime("%H:%M:%S:%f UTC"), inline=True)
             embed.add_field(name='Price Sensitive',
                             value=str(announcement['isPriceSensitive']), inline=True)
             embed.add_field(name='Document URL',

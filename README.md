@@ -7,7 +7,8 @@
 - [x] Tool to get company's Xids, https://asx.api.markitdigital.com/asx-research/1.0/search/price?itemsPerPage=1&page=0&searchText=eml, check that symbol item is equal to code, then add it in.
 - [x] Add config file.
 - [ ] Clean up code structure.
-- [ ] Parse date.
+- [x] Parse date.
+- [ ] Timezone adjust times.
 - [ ] Spice up embed.
 - [ ] Seperate announcements for different stocks into different channels.
 - [ ] Get company logo for embed.
