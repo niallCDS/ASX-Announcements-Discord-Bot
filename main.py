@@ -9,7 +9,7 @@ from datetime import datetime
 config = ConfigParser()
 config.read('config.ini')
 
-company_tickers = json.loads(config['Companies']['companies'])
+company_tickers = json.loads(config['Watchlist']['watchlist'])
 
 conn = sqlite3.connect('announcements.db')
 c = conn.cursor()
@@ -39,23 +39,24 @@ for company in company_tickers:
                 f"INSERT INTO {company} VALUES (?, ?)", (document_key, date))
             webhook = Webhook.partial(
                 int(config['Discord Settings']['id']), config['Discord Settings']['token'], adapter=RequestsWebhookAdapter())
-            if announcement['isPriceSensitive'] is True:
+            if announcement['announcementTypes'][0] is True:
                 embed_colour = Colour.red()
             else:
-                embed_colour = Colour.orange()
+                embed_colour = Colour.green()
             announcement_date = datetime.strptime(
                 announcement['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
             embed = Embed(
-                title=f"{announcement['companyInfo'][0]['symbol']} - {announcement['headline']}", colour=embed_colour, timestamp=announcement_date)
+                title=announcement['headline'], colour=embed_colour, timestamp=announcement_date)
             embed.add_field(name='Announcement Type',
-                            value=announcement['announcementTypes'][0], inline=True)
+                            value=announcement['announcementTypes'][0])
             embed.add_field(name='Announcement Time',
-                            value=announcement_date.strftime("%H:%M:%S:%f UTC"), inline=True)
+                            value=announcement_date.strftime("%H:%M:%S:%f UTC"))
             embed.add_field(name='Price Sensitive',
-                            value=str(announcement['isPriceSensitive']), inline=True)
+                            value=str(announcement['isPriceSensitive']))
             embed.add_field(name='Document URL',
-                            value=f"https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/{announcement['documentKey']}?access_token=83ff96335c2d45a094df02a206a39ff4", inline=True)
-            webhook.send(embed=embed)
+                            value=f"https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/{announcement['documentKey']}?access_token=83ff96335c2d45a094df02a206a39ff4", inline=False)
+            webhook.send(
+                embed=embed, username=company, avatar_url="https://www2.asx.com.au/content/dam/asx/asx-logos/asx-brandmark.png")
             conn.commit()
         else:
             print("repeat")
