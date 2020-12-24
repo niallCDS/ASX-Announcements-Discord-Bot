@@ -49,7 +49,7 @@ def main():
         c.execute(
             f"CREATE TABLE IF NOT EXISTS {company} (document_key text, date text)")
         announcements = requests.get(
-            f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=5").json()
+            f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=99999").json()
         for announcement in announcements['data']['items']:
             document_key = announcement["documentKey"]
             date = announcement["date"]
