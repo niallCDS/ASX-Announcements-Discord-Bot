@@ -1,15 +1,35 @@
 # ASX Announcements Discord Bot
 
-> :exclamation: If you use this project helpful in any way, let me know on Twitter [@NiallGillmor](https://twitter.com/NiallGillmor)!
+:exclamation: If you find this project helpful in any way, let me know on Twitter [@NiallGillmor](https://twitter.com/NiallGillmor)!
 
 ## Description
 
 Lightweight discord webhook intended to be run on schedule to post webhooks to a specific Discord channel alerting new ASX announcements for a set watchlist.
 
+## Installation
+
+1. Download or clone the repo.
+2. `pip install` the dependancies/requirements listed below.
+3. Add the tickers of the companies you wish to watch to the config.ini file as show below.
+   <img align="center" src="https://i.imgur.com/7OhZHlO.png">
+4. Create a webhook in the Discord channel you wish to post announcements to. Follow [this](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) guide on how to create a webhook.
+5. Using the newly created webhook URL, set the id and token in the config.ini file. Your ID and token are taken from the webhook URL as follows: `https://discord.com/api/webhooks/`id`/`token.
+6. Save your changes to the config.ini file.
+7. Run the main.py script.
+
+### Dependencies/Requirements
+
+- requests
+- json
+- sqlite3
+- discord
+- configparser
+- datetime
+
 ## To-Do
 
-- [ ] Clean up code.
-- [ ] Add details of installation and setup to README
+- [x] Clean up code.
+- [x] Add details of installation and setup to README
 - [x] Tool to get company's Xids, https://asx.api.markitdigital.com/asx-research/1.0/search/price?itemsPerPage=1&page=0&searchText=eml, check that symbol item is equal to code, then add it in.
 - [x] Add config file.
 - [x] Parse date.
@@ -29,7 +49,7 @@ Lightweight discord webhook intended to be run on schedule to post webhooks to a
 - python-discord-webhook module is not async, thus unsuitable for large amounts of Discord webhooks as rate limited.
 - Can utilise discord.py to send webhooks without having associated authentication with a bot.
 - Using the configparser module.
-- Requirements file.
+- Formatting usable READMEs.
 
 ## Contact Me
 
