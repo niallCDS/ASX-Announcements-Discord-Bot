@@ -1,6 +1,6 @@
 # ASX Announcements Discord Bot
 
-:exclamation: If you find this project helpful in any way, let me know on Twitter [@NiallGillmor](https://twitter.com/NiallGillmor)!
+:exclamation: If you find this project helpful in any way, let me know on Twitter [@niallgillmor](https://twitter.com/niallgillmor)!
 
 ## Description
 
@@ -16,6 +16,8 @@ Lightweight discord webhook intended to be run on schedule to post webhooks to a
 5. Using the newly created webhook URL, set the id and token in the example.config.ini file. Your ID and token are taken from the webhook URL as follows: `https://discord.com/api/webhooks/`id`/`token.
 6. Save your changes to the example.config.ini file and rename the newly saved example.config.ini file to `config.ini`.
 7. Run the main.py script.
+
+NB: If you wish to schedule the script to run, I would suggest following a tutorial like [this](https://www.youtube.com/watch?v=n2Cr_YRQk7o).
 
 ### Dependencies/Requirements
 
@@ -56,4 +58,4 @@ Lightweight discord webhook intended to be run on schedule to post webhooks to a
 
 ## Contact Me
 
-<p align="center"><img align="center" src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/twitter.svg" alt="Twitter" width="20"> <a href="https://twitter.com/NiallGillmor">@NiallGillmor</a></p>
+<p align="center"><img align="center" src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/brands/twitter.svg" alt="Twitter" width="20"> <a href="https://twitter.com/niallgillmor">@niallgillmor</a></p>
