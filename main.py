@@ -16,7 +16,7 @@ def get_xid(company_ticker: str) -> str:
 def send_webhook(config, company, announcement):
     webhook = Webhook.partial(
         int(config['Discord Settings']['id']), config['Discord Settings']['token'], adapter=RequestsWebhookAdapter())
-    if announcement['announcementTypes'][0] is True:
+    if announcement['isPriceSensitive'] is True:
         embed_colour = Colour.red()
     else:
         embed_colour = Colour.green()
