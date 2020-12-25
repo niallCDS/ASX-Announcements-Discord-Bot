@@ -10,11 +10,11 @@ Lightweight discord webhook intended to be run on schedule to post webhooks to a
 
 1. Download or clone the repo.
 2. `pip install` the dependancies/requirements listed below.
-3. Add the tickers of the companies you wish to watch to the config.ini file as show below.
+3. Add the tickers of the companies you wish to watch to the example.config.ini file as show below.
    <img align="center" src="https://i.imgur.com/7OhZHlO.png">
 4. Create a webhook in the Discord channel you wish to post announcements to. Follow [this](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks) guide on how to create a webhook.
-5. Using the newly created webhook URL, set the id and token in the config.ini file. Your ID and token are taken from the webhook URL as follows: `https://discord.com/api/webhooks/`id`/`token.
-6. Save your changes to the config.ini file.
+5. Using the newly created webhook URL, set the id and token in the example.config.ini file. Your ID and token are taken from the webhook URL as follows: `https://discord.com/api/webhooks/`id`/`token.
+6. Save your changes to the example.config.ini file and rename the newly saved example.config.ini file to `config.ini`.
 7. Run the main.py script.
 
 ### Dependencies/Requirements
