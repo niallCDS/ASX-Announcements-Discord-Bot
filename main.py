@@ -23,7 +23,9 @@ def send_webhook(config, company, announcement):
     announcement_date = datetime.strptime(
         announcement['date'], "%Y-%m-%dT%H:%M:%S.%fZ")
     embed = Embed(
-        title=announcement['headline'], colour=embed_colour, timestamp=announcement_date)
+        title=f"{company} - {announcement['headline']}", colour=embed_colour, timestamp=announcement_date)
+    embed.add_field(name='Company Name',
+                    value=announcement['companyInfo'][0]['displayName'], inline=False)
     embed.add_field(name='Announcement Type',
                     value=announcement['announcementTypes'][0])
     embed.add_field(name='Announcement Time',
@@ -48,6 +50,9 @@ def main():
     for company in company_tickers:
         c.execute(
             f"CREATE TABLE IF NOT EXISTS {company} (document_key text, date text)")
+        c.execute(
+            f"SELECT Count() FROM {company}")
+        table_rows = c.fetchone()[0]
         announcements = requests.get(
             f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=99999").json()
         for announcement in announcements['data']['items']:
@@ -59,7 +64,8 @@ def main():
                 print(f"New announcement {document_key}, {date}")
                 c.execute(
                     f"INSERT INTO {company} VALUES (?, ?)", (document_key, date))
-                send_webhook(config, company, announcement)
+                if table_rows != 0:
+                    send_webhook(config, company, announcement)
                 conn.commit()
 
     conn.close()

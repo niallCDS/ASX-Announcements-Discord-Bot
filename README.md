@@ -38,12 +38,12 @@ Lightweight discord webhook intended to be run on schedule to post webhooks to a
 - [x] Add database and store unqiue.
 - [x] Create new table if that company does not already exist.
 - [x] Discord bot.
-- [ ] Fix dynamic embed colour.
-- [ ] Add ticket/company identify to message for stacked continuous messages.
+- [x] Fix dynamic embed colour.
+- [x] Add ticker/company identify to message for stacked continuous messages.
 
 ## Suggested Features
 
-- [ ] On first run, populate database without posting Discord messages for every past announcement.
+- [x] On first run, populate database without posting Discord messages for every past announcement.
 - [ ] Seperate announcements for different stocks into different channels.
 
 ## Personal Project Learnings
