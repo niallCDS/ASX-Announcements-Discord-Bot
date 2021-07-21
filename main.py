@@ -1,9 +1,10 @@
-import requests
 import json
 import sqlite3
-from discord import Webhook, RequestsWebhookAdapter, Embed, Colour
 from configparser import ConfigParser
 from datetime import datetime
+
+import requests
+from discord import Colour, Embed, RequestsWebhookAdapter, Webhook
 
 
 def get_xid(company_ticker: str) -> str:
@@ -26,8 +27,13 @@ def send_webhook(config, company, announcement):
         title=f"{company} - {announcement['headline']}", colour=embed_colour, timestamp=announcement_date)
     embed.add_field(name='Company Name',
                     value=announcement['companyInfo'][0]['displayName'], inline=False)
-    embed.add_field(name='Announcement Type',
-                    value=announcement['announcementTypes'][0])
+    try:
+        embed.add_field(name='Announcement Type',
+                        value=announcement['announcementTypes'][0])
+    except:
+        print(
+            f"[ERROR] Couldn't find announcement type for {company}'s announcement on {announcement_date}")
+        pass
     embed.add_field(name='Announcement Time',
                     value=announcement_date.strftime("%H:%M:%S:%f UTC"))
     embed.add_field(name='Price Sensitive',
@@ -54,7 +60,7 @@ def main():
             f"SELECT Count() FROM {company}")
         table_rows = c.fetchone()[0]
         announcements = requests.get(
-            f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=99999").json()
+            f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=9999").json()
         for announcement in announcements['data']['items']:
             document_key = announcement["documentKey"]
             date = announcement["date"]
