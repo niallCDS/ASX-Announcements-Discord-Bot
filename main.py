@@ -54,10 +54,11 @@ def main():
     c = conn.cursor()
 
     for company in company_tickers:
+        company_table_name = f"C_{company}"
         c.execute(
-            f"CREATE TABLE IF NOT EXISTS {company} (document_key text, date text)")
+            f"CREATE TABLE IF NOT EXISTS {company_table_name} (document_key text, date text)")
         c.execute(
-            f"SELECT Count() FROM {company}")
+            f"SELECT Count() FROM {company_table_name}")
         table_rows = c.fetchone()[0]
         announcements = requests.get(
             f"https://asx.api.markitdigital.com/asx-research/1.0/markets/announcements?entityXids[]={get_xid(company)}&page=0&itemsPerPage=9999").json()
@@ -65,11 +66,11 @@ def main():
             document_key = announcement["documentKey"]
             date = announcement["date"]
             c.execute(
-                f"SELECT 1 FROM {company} WHERE document_key=?", (document_key,))
+                f"SELECT 1 FROM {company_table_name} WHERE document_key=?", (document_key,))
             if c.fetchone() is None:
                 print(f"New announcement {document_key}, {date}")
                 c.execute(
-                    f"INSERT INTO {company} VALUES (?, ?)", (document_key, date))
+                    f"INSERT INTO {company_table_name} VALUES (?, ?)", (document_key, date))
                 if table_rows != 0:
                     send_webhook(config, company, announcement)
                 conn.commit()
